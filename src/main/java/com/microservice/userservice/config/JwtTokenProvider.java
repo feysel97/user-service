@@ -18,7 +18,7 @@ public class JwtTokenProvider {
 
     private final SecretKey mainSigningKey;
 
-    // Injecting the secret string from your application.yml
+    // Injecting the secret string from application.yml
     public JwtTokenProvider(@Value("${app.jwt.secret}") String secretKeyString) {
         try {
             System.out.println("Initializing JwtTokenProvider with key length: " + secretKeyString.length());

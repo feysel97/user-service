@@ -13,7 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity // Allows us to use @PreAuthorize("hasRole('ADMIN')") directly on methods later
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -36,7 +36,7 @@ public class SecurityConfig {
                 // Enforce completely stateless session rules
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                // Inject our custom JWT validation filter right before the core UsernamePasswordAuthenticationFilter
+                // Inject custom JWT validation filter right before the core UsernamePasswordAuthenticationFilter
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

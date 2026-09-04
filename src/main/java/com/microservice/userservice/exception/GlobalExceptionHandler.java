@@ -47,13 +47,12 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Internal Server Error",
-                "An unexpected error occurred", // We hide the real 'ex.getMessage()' in production for security!
+                "An unexpected error occurred",
                 LocalDateTime.now()
         );
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // Add this right above your catch-all Exception.class handler
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex) {
         ErrorResponse error = new ErrorResponse(

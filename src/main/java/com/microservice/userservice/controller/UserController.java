@@ -45,7 +45,6 @@ public class UserController {
     }
 
     // 4. Search users (Pagination is injected automatically via URL parameters like ?page=0&size=10)
-    // We can restrict this so only Admins can search the user database!
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/search")
     public ResponseEntity<Page<UserProfileResponse>> searchUsers(

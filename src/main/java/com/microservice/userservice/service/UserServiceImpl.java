@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void deactivateAccount(String username) {
         User user = fetchUserByUsername(username);
-        // Instead of deleting the record, we soft-delete / deactivate it
-        user.setStatus(UserStatus.INACTIVE); // Or DELETED based on your exact business rule
+        // Instead of deleting the record, soft-delete / deactivate it
+        user.setStatus(UserStatus.INACTIVE);
         userRepository.save(user);
     }
 
@@ -53,11 +53,10 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public Page<UserProfileResponse> searchUsers(String keyword, Pageable pageable) {
         Page<User> userPage = userRepository.searchUsersByKeyword(keyword, pageable);
-        // Spring Data Page seamlessly maps our Entity page to a DTO page!
+        // Spring Data Page seamlessly maps Entity page to a DTO page!
         return userPage.map(this::mapToResponse);
     }
 
-    // Helper method to DRY (Don't Repeat Yourself) the code
     private User fetchUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found with username: " + username));
