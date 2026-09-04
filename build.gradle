@@ -38,6 +38,7 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5' // Allows parsing JSON claims smoothly
 
+
 	// Utilities
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

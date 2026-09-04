@@ -20,10 +20,15 @@ public class JwtTokenProvider {
 
     // Injecting the secret string from your application.yml
     public JwtTokenProvider(@Value("${app.jwt.secret}") String secretKeyString) {
-        // If your key is Base64 encoded in your config, use: Decoders.BASE64.decode(secretKeyString)
-        // For a raw plain text string (must be at least 32 bytes/256-bit long), we use getBytes:
-        byte[] keyBytes = secretKeyString.getBytes(StandardCharsets.UTF_8);
-        this.mainSigningKey = Keys.hmacShaKeyFor(keyBytes);
+        try {
+            System.out.println("Initializing JwtTokenProvider with key length: " + secretKeyString.length());
+            byte[] keyBytes = secretKeyString.getBytes(StandardCharsets.UTF_8);
+            this.mainSigningKey = Keys.hmacShaKeyFor(keyBytes);
+        } catch (Exception e) {
+            System.err.println("CRITICAL: Failed to initialize JwtTokenProvider key!");
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     // Validates the token structure and expiration against the shared secret signature
